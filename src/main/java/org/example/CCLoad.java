@@ -10,9 +10,9 @@ public class CCLoad  implements Callable<Integer> {
     private String url;
     @CommandLine.Option(names = {"-n", "--number-of-requests"}, required = true, description = "Number of requests to send")
     private int numberOfRequests;
-    @CommandLine.Option(names = {"-c", "--number-of-concurrent-requests"}, required = true, description = "Number of concurrent requests to send")
+    @CommandLine.Option(names = {"-c", "--number-of-concurrent-requests"}, required = false, description = "Number of concurrent requests to send")
     private int numberOfConcurrentRequests;
-    @CommandLine.Option(names = {"-f", "--file-name"}, required = true, description = "Name of the file containing urls to load test")
+    @CommandLine.Option(names = {"-f", "--file-name"}, required = false, description = "Name of the file containing urls to load test")
     private String fileName;
 
     public static void main(String[] args) {
@@ -21,7 +21,8 @@ public class CCLoad  implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() throws Exception{
+        var httpResponse =LoadTest.test(url);
         System.out.println("Loading test application...");
         System.out.println("URL: " + url);
         System.out.println("Number of requests: " + numberOfRequests);
@@ -29,6 +30,7 @@ public class CCLoad  implements Callable<Integer> {
         System.out.println("File name: " + fileName);
         System.out.println("Loading test application complete.");
         System.out.println("Results will be displayed shortly.");
+        System.out.println("Response code: " + httpResponse);
         System.out.println("Thank you for using org.example.CCLoad.");
         System.out.println("Goodbye.");
         System.exit(0); // Exit the program after displaying the results.
