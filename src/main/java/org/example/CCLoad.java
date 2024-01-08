@@ -22,7 +22,7 @@ public class CCLoad  implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception{
-        var httpResponse =LoadTest.test(url);
+        var httpResponse =LoadTest.test(url, 10);
         System.out.println("Loading test application...");
         System.out.println("URL: " + url);
         System.out.println("Number of requests: " + numberOfRequests);
